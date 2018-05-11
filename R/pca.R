@@ -81,39 +81,51 @@ pca_screeplot = function(pca.result, num.pcs = NULL, cex.leg = 0.8, leg.pos = "r
 
 #2d scores plot
 pca_scoresplot2D = function(dataset, pca.result, column.class = NULL, pcas = c(1,2), labels = FALSE, 
-                            ellipses = FALSE, pallette = 2, leg.pos = "right", xlim = NULL, ylim = NULL)
+                            ellipses = FALSE, bw=F, pallette = 2, leg.pos = "right", xlim = NULL, ylim = NULL)
 {
   has.legend = FALSE
   if (class(pca.result) == "prcomp"){
-	scores = pca.result$x
+    scores = pca.result$x
   } else if (class(pca.result) == "princomp"){
-	scores = pca.result$scores
+    scores = pca.result$scores
   }
   pca.points = data.frame(scores[,pcas])
   names(pca.points) = c("x","y")
   if (is.null(column.class)){
-	group.values = factor(rep(4, ncol(dataset$data)))
+    group.values = factor(rep(4, ncol(dataset$data)))
   } else {
-	group.values = dataset$metadata[,column.class]
-	has.legend = TRUE
+    group.values = dataset$metadata[,column.class]
+    has.legend = TRUE
   }
   pca.points$group = group.values
   pca.points$label = colnames(dataset$data)
-  pca.plot = ggplot2::ggplot(data = pca.points, ggplot2::aes_string(x='x', y='y',colour='group')) + ggplot2::geom_point(size=3, alpha=1) +
-    ggplot2::scale_colour_brewer(type = "qual", palette=pallette) + 
+  if (bw) shape.values = 1:length(levels(group.values))
+  if (bw)
+    pca.plot = ggplot2::ggplot(data = pca.points, ggplot2::aes_string(x='x', y='y', shape='group'))
+  else
+    pca.plot = ggplot2::ggplot(data = pca.points, ggplot2::aes_string(x='x', y='y',colour='group')) 
+  pca.plot = pca.plot + ggplot2::geom_point(size=3, alpha=1) 
+  if (bw) 
+    pca.plot = pca.plot + ggplot2::scale_shape_manual(values = shape.values)
+  else
+    pca.plot = pca.plot + ggplot2::scale_colour_brewer(type = "qual", palette=pallette) 
+  pca.plot = pca.plot +
     ggplot2::xlab(paste(paste("PC",pcas[1]," -",sep=""), paste(pca_importance(pca.result, pcas[1], sd=F, prop=T, cumul = F)*100,"%",sep=""))) + 
     ggplot2::ylab(paste(paste("PC",pcas[2]," -",sep=""), paste(pca_importance(pca.result, pcas[2], sd=F, prop=T, cumul = F)*100,"%",sep="")))
-  if (has.legend) pca.plot = pca.plot + ggplot2::theme(legend.position = leg.pos)
+  if (has.legend) {
+    if (bw) pca.plot = pca.plot + ggplot2::theme_bw() 
+    else pca.plot = pca.plot + ggplot2::theme(legend.position = leg.pos)
+  }
   if (!is.null(xlim)){
-	pca.plot = pca.plot + ggplot2::xlim(xlim[1],xlim[2])
+    pca.plot = pca.plot + ggplot2::xlim(xlim[1],xlim[2])
   }
   if (!is.null(ylim)){
-	pca.plot = pca.plot + ggplot2::ylim(ylim[1],ylim[2])
+    pca.plot = pca.plot + ggplot2::ylim(ylim[1],ylim[2])
   }
   if (labels){
     pca.plot = pca.plot + ggplot2::geom_text(data = pca.points, ggplot2::aes_string(x = 'x',y = 'y',label='label'),hjust=-0.1, vjust=0)
   }
-  if (ellipses){
+  if (!bw & ellipses){
     df.ellipses = calculate_ellipses(pca.points)
     pca.plot = pca.plot + ggplot2::geom_path(data=df.ellipses, ggplot2::aes_string(x='x', y='y',colour='group'), size=1, linetype=2) 
   }
@@ -328,7 +340,7 @@ pca_pairs_plot = function(dataset, pca.result, column.class = NULL, pcas = c(1,2
   }
   pairs.df = data.frame(scores[,pcas])
   pairs.df$group = group.values
-  GGally::ggpairs(pairs.df, colour = 'group', ...)
+  GGally::ggpairs(pairs.df, mapping = ggplot2::aes(color=group), ...)
 }
 
 #kmeans clustering with 3 PCs
@@ -352,7 +364,8 @@ pca_kmeans_plot3D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2
 
 #kmeans clustering with 2 first PCs
 pca_kmeans_plot2D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2), 
-                             kmeans.result = NULL, labels = FALSE, ellipses = FALSE, leg.pos = "right", xlim = NULL, ylim = NULL){
+                             kmeans.result = NULL, labels = FALSE,
+			     bw=F, ellipses = FALSE, leg.pos = "right", xlim = NULL, ylim = NULL){
   if (class(pca.result) == "prcomp"){
 	scores = pca.result$x
   } else if (class(pca.result) == "princomp"){
@@ -366,9 +379,21 @@ pca_kmeans_plot2D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2
   names(pca.points) = c("x","y")
   pca.points$group = factor(kmeans.result$cluster)
   pca.points$label = colnames(dataset$data)
-  pca.plot = ggplot2::ggplot(data = pca.points, ggplot2::aes_string(x='x', y='y',colour='group')) + ggplot2::geom_point(size=3, alpha=.6) +
-    ggplot2::scale_colour_brewer(palette="Set1") + ggplot2::xlab(paste("PC",pcas[1],sep="")) + ggplot2::ylab(paste("PC",pcas[2],sep="")) +
-    ggplot2::theme(legend.position = leg.pos)
+  if (bw) shape.values = 1:num.clusters
+  
+  if (bw) pca.plot = ggplot2::ggplot(data = pca.points, ggplot2::aes_string(x='x', y='y',shape='group'))
+  else pca.plot = ggplot2::ggplot(data = pca.points, ggplot2::aes_string(x='x', y='y',colour='group')) 
+  pca.plot = pca.plot + ggplot2::geom_point(size=3, alpha=.6)
+  
+  if (bw) pca.plot = pca.plot + ggplot2::scale_shape_manual(values = shape.values)
+  else  pca.plot = pca.plot + ggplot2::scale_colour_brewer(palette="Set1") 
+  
+  pca.plot = pca.plot + ggplot2::xlab(paste("PC",pcas[1],sep="")) + 
+    ggplot2::ylab(paste("PC",pcas[2],sep=""))
+  
+  if (bw) pca.plot = pca.plot + ggplot2::theme_bw()
+  else pca.plot = pca.plot + ggplot2::theme(legend.position = leg.pos)
+  
   if (!is.null(xlim)){
 	pca.plot = pca.plot + ggplot2::xlim(xlim[1],xlim[2])
   }
@@ -378,7 +403,7 @@ pca_kmeans_plot2D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2
   if (labels){
     pca.plot = pca.plot + ggplot2::geom_text(data = pca.points, ggplot2::aes_string(x='x',y='y',label='label'),hjust=-0.1, vjust=0, size = 3)
   }
-  if (ellipses){
+  if (!bw & ellipses){
     df.ellipses = calculate_ellipses(pca.points)
     pca.plot = pca.plot + ggplot2::geom_path(data=df.ellipses, ggplot2::aes_string(x='x', y='y',colour='group'), size=1, linetype=2) 
   }
@@ -399,7 +424,7 @@ pca_pairs_kmeans_plot = function(dataset, pca.result, num.clusters = 3, kmeans.r
   }
   pairs.df = data.frame(scores[,pcas])
   pairs.df$group = factor(kmeans.result$cluster)
-  GGally::ggpairs(pairs.df, colour = 'group')
+  GGally::ggpairs(pairs.df, mapping = ggplot2::aes(color=group))
 }
 
 #draw ellipses

@@ -9,7 +9,7 @@
 }
 \usage{
 pca_kmeans_plot2D(dataset, pca.result, num.clusters = 3, 
-pcas = c(1, 2), kmeans.result = NULL, labels = FALSE, 
+pcas = c(1, 2), kmeans.result = NULL, labels = FALSE, bw=F,
 ellipses = FALSE, leg.pos = "right", xlim = NULL, ylim = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
@@ -33,7 +33,10 @@ ellipses = FALSE, leg.pos = "right", xlim = NULL, ylim = NULL)
     boolean value indicating if the samples' labels will be shown.
 }
   \item{ellipses}{
-    boolean value that indicates if an ellipse will be drawn on each group of the metadata's variable.
+    boolean value that indicates if an ellipse will be drawn on each group of the metadata's variable. Ellipses will not be drawn if bw=TRUE.
+}
+  \item{bw}{
+    if TRUE, it will be displayed a black and white plot. It defaults to FALSE.
 }
   \item{leg.pos}{
     legend position.

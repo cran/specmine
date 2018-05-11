@@ -93,26 +93,31 @@ kmeans_plot = function(dataset, kmeans.result){
   ggdendro::ggdendrogram(hc.result, ...)
 }
 
-"dendrogram_plot_col" = function(dataset, hc.result, classes.col, title = "", lab.cex = 1.0, leg.pos = "topright", ...) 
+"dendrogram_plot_col" = function(dataset, hc.result, classes.col, colors=NULL, title = "", lab.cex = 1.0, leg.pos = "topright", label_samples=NULL, ...)
 {
   classes = dataset$metadata[,classes.col]
   cluster = as.dendrogram(hc.result)
-  cluster = dendrapply(cluster, color_leaf, dataset, classes, lab.cex)
+  if(is.null(label_samples)) label_samples=colnames(dataset$data)
+  else label_samples=dataset$metadata[,label_samples]
+  cluster = dendrapply(cluster, color_leaf, dataset, classes, label_samples, lab.cex)
   plot(cluster, main = title, horiz = FALSE, ...)
   leg.txt = levels(classes)
-  leg.col = 1:length(levels(classes))
-  leg.txt = c("Key", leg.txt)
+  leg.txt = c("Legend:", leg.txt)
+  if (is.null(colors)) leg.col = 1:length(levels(classes))
+  else leg.col = colors
   leg.col = c("black", leg.col)
   if (leg.pos != "none")
     legend(leg.pos, leg.txt, text.col = leg.col, bty = "n")
 }
 
-"color_leaf" = function (n, dataset, classes, lab.cex = 1.0) {
-    if (is.leaf(n)) {
-      a <- attributes(n)
-      i <- match(a$label, get_sample_names(dataset))
-      attr(n, "nodePar") <- c(a$nodePar, list(lab.col = as.integer(classes[i]), 
-                                              lab.cex = lab.cex, pch = NA))
-    }
-    n
+
+"color_leaf" = function (n, dataset, classes, labels, lab.cex = 1.0) {
+  if (is.leaf(n)) {
+    a <- attributes(n)
+    i <- match(a$label, get_sample_names(dataset))
+    attr(n, "nodePar") <- c(a$nodePar, list(lab.col = as.integer(classes[i]),
+                                            lab.cex = lab.cex, pch = NA))
+    attr(n, "label") <- labels[i]
+  }
+  n
 }

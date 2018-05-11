@@ -48,7 +48,7 @@
 
 impute_nas_linapprox = function(dataset){
   hyper.object = convert_to_hyperspec(dataset)
-	linapprox.res = hyperSpec::spc.NA.linapprox(hyper.object)
+	linapprox.res = hyperSpec::spc.NA.approx(hyper.object)
   res.dataset = convert_from_hyperspec(linapprox.res)
   res.dataset$type = dataset$type
   res.dataset
@@ -87,7 +87,7 @@ impute_nas_linapprox = function(dataset){
 #taken from metaboanalyst - uses impute package from bioconductor
 
 "impute_nas_knn" = function(dataset, k = 10, ...){
-  dataset$data = impute::impute.knn(dataset$data, ...)
+  dataset$data = impute::impute.knn(dataset$data, ...)$data
   dataset
 }
 
