@@ -1,4 +1,4 @@
-139fc55d37356b90646b89860691ff4f *DESCRIPTION
+586bccf30611cb51d225c3f1570f332d *DESCRIPTION
 0c567b730aad1ca3627ce96fcf390e57 *NAMESPACE
 276a9fe3c10f4a50d0b4ed761bb75499 *R/MAIT_metabolite_identification.R
 cc5fb6bb253684b0a5651321bdaa96c6 *R/NMR_metabolite_identification.R
@@ -12,7 +12,7 @@ eebee9a48743f7165308a9e351172648 *R/filter_dataset.R
 fcfe0a6f02fd0028e84d3e49e41e11ed *R/filters_flat.R
 51be464055faaa3366adfd746963560f *R/get_metabolights_study.R
 5078d875ee89187bf2f7c2c2a7c9016e *R/graphics.R
-4dd60bedc841ed6600c72e05c62e06e1 *R/init.R
+c4c1e401845110f729212c589b54565f *R/init.R
 3123a0b55ccf6a74f44987e90a956f04 *R/machinelearning.R
 e91bf86165aeb2aad3ae0367584d6ce5 *R/missing_values.R
 0ab702c7cb915afc6f78229a002001a7 *R/ms_functions.R
@@ -23,7 +23,7 @@ e38b34b2249dfa130dfa8e6b37cea3c9 *R/pca.R
 5c08033835818fb507b5fe38728672c3 *R/peaklists.R
 fd1fc984bb757dc17b15e1a84aa03c7f *R/preprocessing.R
 291ed886a496a6f39d5c8f107f2f4bbd *R/read.spc.modified.R
-896418f2d579a5145827b82121ea2770 *R/read_NMR_spectra.R
+398136fd288c088487125cd0a7b2ae3b *R/read_NMR_spectra.R
 cbabe2fe3250365d291be234503098dc *R/read_dx.R
 7e8782ddf99de14bdf12bdec803675fa *R/read_spc.R
 5236eb1202e531e649cbed90ec590e83 *R/reading_data.R
@@ -227,7 +227,7 @@ e7e31088a2bf9fb3fb2e2acd39170caf *man/set_x_values.Rd
 195535a52e64050ce8f4c6836c5fb693 *man/shift_correction.Rd
 b65a239c3aa63b4becdc41a48a226a36 *man/smoothing_interpolation.Rd
 5a1c2e0cfd6726ecba4bfd3c06abfb80 *man/snv_dataset.Rd
-f35214816fbba3ade4c175b5d2ad5852 *man/spinalCord.Rd
+2bec2b5235be82625c0c979eb567f381 *man/spinalCord.Rd
 008569e566ff27cababc1bb71df8c061 *man/stats_by_sample.Rd
 6121f6c4efd37e3e1fc77a99e01a2eb6 *man/stats_by_variable.Rd
 f168f1c5945e497a1a33cbbfc744e0c4 *man/subset_by_samples_and_xvalues.Rd
