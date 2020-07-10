@@ -41,12 +41,6 @@ window = 11, deriv = 0)
   Returns the dataset with the spectra smoothed.
 }
 
-\examples{
-  ## Example of smoothing the spectra from dataset
-  data(cassavaPPD)
-  dataset.smoothed = smoothing_interpolation(cassavaPPD, method = "bin", 
-		     reducing.factor = 2)
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ smoothing }

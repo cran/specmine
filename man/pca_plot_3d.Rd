@@ -37,8 +37,8 @@ legend.place = "topright", ...)
 }
 
 \examples{
-\dontrun{
-  ## Example of a 3d pca plot
+\donttest{
+  ### Example of a 3d pca plot
   data(cachexia)
   train.result = train_models_performance(cachexia, "pls", 
 	"Muscle.loss", "cv")

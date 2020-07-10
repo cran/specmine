@@ -36,11 +36,6 @@ normalize_samples(datamat, method, ref = NULL, constant = 1000)
   Returns the data matrix normalized.
 }
 
-\examples{
-  ## Example of normalization by median
-  data(cassavaPPD)
-  datamat.norm = normalize_samples(cassavaPPD$data, "median")
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ normalization }

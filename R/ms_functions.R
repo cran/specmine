@@ -2,7 +2,7 @@
 # read LC/GC-MS spectra(.netCDF, .mzXML, mzData)
 # use functions in XCMS package
 read_ms_spec<-function(folder.name, metadata = NULL, profmethod='bin', fwhm=30, bw=30){
-  files <- list.files(folder.name, recursive=T, full.names=TRUE);
+  files <- list.files(folder.name, recursive=TRUE, full.names=TRUE);
   if (is.null(metadata)) {
 	xset <- xcms::xcmsSet(files, profmethod = "bin", fwhm=fwhm)
   } else {
@@ -43,6 +43,11 @@ ms_create_matrix<-function(xset, intvalue = "into"){
 
 # A commonly used value is 30 (seconds) for LC-MS and 4 (seconds) for GC-MS spectra (fwhm).
 read_ms_spectra = function(folder.name, type = "undefined", filename.meta= NULL, description = "", prof.method='bin', fwhm=30, bw=30, intvalue = "into", header.col.meta = TRUE, header.row.meta = TRUE, sep.meta = ","){
+  if(!requireNamespace("xcms", quietly = TRUE)){
+    stop("Package xcms needed for this function to work. Please install it: BiocManager::install('xcms').",
+         call. = FALSE)
+  }
+  
 	if (!is.null(filename.meta))
 		metadata = read_metadata(filename.meta, header.col = header.col.meta, header.row = header.row.meta, sep = sep.meta)
 	else metadata = NULL

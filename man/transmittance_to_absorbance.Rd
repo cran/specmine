@@ -8,7 +8,7 @@
    Converts transmittance values to absorbance values.
 }
 \usage{
-transmittance_to_absorbance(dataset, percent = T)
+transmittance_to_absorbance(dataset, percent = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -24,11 +24,6 @@ transmittance_to_absorbance(dataset, percent = T)
    Returns the dataset with the data points converted to absorbance values.
 }
 
-\examples{
-  ## Example of converting transmittance values to absorbance values
-  data(cassavaPPD)
-  dataset = transmittance_to_absorbance(cassavaPPD, percent = TRUE)
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ transmittance }

@@ -30,11 +30,6 @@ scaling_samples(datamat, method = "auto")
  Returns the data matrix scaled.
 }
 
-\examples{
-  ## Example of auto scaling
-  data(cassavaPPD)
-  cassava.scal = scaling_samples(cassavaPPD$data, "auto")
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ scaling }

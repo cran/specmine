@@ -21,7 +21,7 @@ mass.tolerance = 0.5)
     metadata's variable.
 }
   \item{xSet}{
-   xcmsSet object that can be passed.
+   xcmsSet object that can be passed. Stored in dataset$xSet.
 }
   \item{data.folder}{
    string indicating the data folder.
@@ -41,18 +41,12 @@ mass.tolerance = 0.5)
  http://www.bioconductor.org/packages/release/bioc/html/MAIT.html
 }
 
-\examples{
-\dontrun{
-  ## Example of MAIT metabolite identification
-  data(spinalCord)
-  library(MAIT)
-  mait.metabolites = MAIT_identify_metabolites(spinalCord, "type", 
-			features = "all", data.folder = "data",
-			xSet = spinalCord$xSet)
+\details{
+  After runing the MAIT_identify_metabolites function, the results table can be aaccessed by:
+  
   mait.metab.table = mait.metabolites@FeatureInfo@metaboliteTable
-  mait.metab.table[which(mait.metab.table$Name != "Unknown"), 
-  c(1,3,6)]
-}
+  
+  where 'mait.metabolites' is the result obtained from runing MAIT_identify_metabolites.
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

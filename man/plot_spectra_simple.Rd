@@ -10,7 +10,7 @@
 \usage{
 plot_spectra_simple(dataset, samples = NULL, 
 variable.bounds = NULL, xlab = NULL, ylab = NULL, 
-lty = 1, lwd = 1, col = 1, reverse.x = F, ...)
+lty = 1, lwd = 1, col = 1, reverse.x = FALSE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -44,13 +44,6 @@ lty = 1, lwd = 1, col = 1, reverse.x = F, ...)
   \item{\dots}{
     additional parameters to pass to matplot.
 }
-}
-
-\examples{
-  ## Example of plotting spectra (simple)
-  data(cassavaPPD)
-  plot_spectra_simple(cassavaPPD, samples = c("IAC5_4", "BRA_1"), 
-  variable.bounds = c(1000,2000))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

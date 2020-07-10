@@ -21,11 +21,6 @@ first_derivative(dataset)
   Return the dataset with the first derivative of the data calculated.
 }
 
-\examples{
-  ## Example of calculate the first derivative
-  data(cassavaPPD)
-  cassava.derivative = first_derivative(cassavaPPD)
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ derivative }

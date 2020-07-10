@@ -71,7 +71,7 @@ train_and_predict = function(dataset, new.samples, column.class, model, validati
 
 # train classifier
 train_classifier = function(dataset, column.class, model, validation, num.folds = 10, 
-                            num.repeats = 10, tunelength = 10, tunegrid = NULL, metric = NULL, summary.function = defaultSummary, class.in.metadata = T) {
+                            num.repeats = 10, tunelength = 10, tunegrid = NULL, metric = NULL, summary.function = defaultSummary, class.in.metadata = TRUE) {
   if(class.in.metadata)
 	  train.result = trainClassifier(dataset$data, dataset$metadata[,column.class], model, validation, 
                                  num.folds, num.repeats, tunelength, tunegrid, metric, summary.function)
@@ -85,7 +85,7 @@ train_classifier = function(dataset, column.class, model, validation, num.folds 
 #model: caret classifier
 #validation: caret resampling method -> boot, boot632, cv, repeatedcv, LOOCV, LGOCV, oob(only for random forests)
 trainClassifier <- function(datamat, sampleclass, model, validation, num.folds = 10, num.repeats = 10, 
-                            tunelength = 10, tunegrid = NULL, metric = NULL, summary.function = defaultSummary, class.in.metadata = T)
+                            tunelength = 10, tunegrid = NULL, metric = NULL, summary.function = defaultSummary, class.in.metadata = TRUE)
 {
 	samples.df.ml = data.frame(t(datamat))
 	rnames = gsub('[-\ ]','_',rownames(datamat))
@@ -107,8 +107,8 @@ trainClassifier <- function(datamat, sampleclass, model, validation, num.folds =
 			train.metric = "RMSE"
 		}
 	}
-	if (train.metric == "ROC") class.probs = T
-	else class.probs = F
+	if (train.metric == "ROC") class.probs = TRUE
+	else class.probs = FALSE
 	train.control = caret::trainControl(method=validation, number = num.folds, repeats=num.repeats, classProbs = class.probs, 
 					summaryFunction= summary.function)
 	if (class.in.metadata) 
@@ -136,7 +136,7 @@ predict_samples = function(train.result, new.samples){
 
 train_models_performance = function(dataset, models, column.class, validation, num.folds = 10, 
                                     num.repeats = 10, tunelength = 10, tunegrid = NULL, metric = NULL, 
-                                    summary.function = "default", class.in.metadata = T, compute.varimp = T){
+                                    summary.function = "default", class.in.metadata = TRUE, compute.varimp = TRUE){
 	result.df = NULL
 	classification.flag = FALSE
 	if (compute.varimp) vars.imp = list()
@@ -175,7 +175,7 @@ train_models_performance = function(dataset, models, column.class, validation, n
 		bestTune = train.result$bestTune
 		result.df = rbind(result.df, train.result$result[rownames(bestTune),c("Accuracy", "Kappa",  "AccuracySD",  "KappaSD")])
 		if (compute.varimp) {
-      vars.imp[[i]] = vips[order(vips$Mean, decreasing=T),]
+      vars.imp[[i]] = vips[order(vips$Mean, decreasing=TRUE),]
 		  vips = NULL
 		}
     full.results[[i]] = train.result$results
@@ -217,6 +217,17 @@ summary_var_importance = function(performances, number.rows){
 # PCA PLOTS
 
 "pca_plot_3d" = function(dataset, model, var.class, pcas = 1:3, colors = NULL, legend.place = "topright", ...) {
+  if (!requireNamespace("qdap", quietly = TRUE)) {
+    if(!requireNamespace("scatterplot3d", quietly = TRUE)){
+      stop("Packages qdap and scatterplot3d are needed for this function to work. Please install them: install.packages(c('qdap','scatterplot3d')).",
+           call. = FALSE)
+    }
+    else stop("Package qdap needed for this function to work. Please install it: install.packages('qdap').", call. = FALSE)
+  }
+  else if(!requireNamespace("scatterplot3d", quietly = TRUE)){
+    stop("Package scatterplot3d needed for this function to work. Please install it: install.packages('scatterplot3d').",
+         call. = FALSE)
+  }
 
   if (length(pcas) != 3) stop("Wrong dimension in parameter pcas")
   if (ncol(model$scores) < 3) stop("Less than 3 components")

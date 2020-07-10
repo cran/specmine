@@ -21,11 +21,6 @@ offset_correction(dataset)
   Returns the dataset 
 }
 
-\examples{
-  ## Example of offset correction
-  data(cassavaPPD)
-  cassava.corrected = offset_correction(cassavaPPD)
-}
 
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

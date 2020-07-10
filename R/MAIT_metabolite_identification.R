@@ -1,14 +1,25 @@
 MAIT_identify_metabolites = function(dataset, metadata.variable, xSet = NULL, data.folder = NULL, features = NULL, 
 									 mass.tolerance = 0.5){
+  if (!requireNamespace("MAIT", quietly = TRUE)) {
+    if(!requireNamespace("xcms", quietly = TRUE)){
+      stop("Packages MAIT and xcms are needed for this function to work. Please install them: BiocManager::install(c('MAIT','xcms')).",
+           call. = FALSE)
+    }
+    else stop("Package MAIT needed for this function to work. Please install it: BiocManager::install('MAIT').", call. = FALSE)
+  }
+  else if(!requireNamespace("xcms", quietly = TRUE)){
+    stop("Package xcms needed for this function to work. Please install it: BiocManager::install('xcms').",
+         call. = FALSE)
+  }
 
 	metadata.var = dataset$metadata[,metadata.variable]
 	mait.object = sampleProcessing_modified(dataDir = data.folder, metadata = metadata.var, xSet = xSet, project = "MAIT")
 	mait.annotation = MAIT::peakAnnotation(MAIT.object = mait.object, corrWithSamp = 0.7, corrBetSamp = 0.75, 
                             perfwhm = 0.6)
 	mait.sig = MAIT::spectralSigFeatures(MAIT.object = mait.annotation, pvalue = 0.05, p.adj = "none",
-                               scale = FALSE, printCSVfile = F)
+                               scale = FALSE, printCSVfile = FALSE)
     
-	scoresTable = MAIT::getScoresTable(MAIT.object = mait.sig, getExtendedTable = T)
+	scoresTable = MAIT::getScoresTable(MAIT.object = mait.sig, getExtendedTable = TRUE)
 
 	if (!is.null(features) && length(features) == 1 && features == "all"){
 		mait.sig@FeatureData@featureSigID = 1:length(scoresTable$extendedTable$mz)
@@ -18,7 +29,7 @@ MAIT_identify_metabolites = function(dataset, metadata.variable, xSet = NULL, da
 		mait.sig@FeatureData@featureSigID = indexes
     }
 	
-	mait.bio = MAIT::Biotransformations(MAIT.object = mait.sig, adductAnnotation = T, peakPrecision = 0.005)
+	mait.bio = MAIT::Biotransformations(MAIT.object = mait.sig, adductAnnotation = TRUE, peakPrecision = 0.005)
 	mait.identify = MAIT::identifyMetabolites(MAIT.object = mait.sig, peakTolerance = 0.005)
 	mait.identify
 }
@@ -30,6 +41,18 @@ sampleProcessing_modified = function (dataDir = NULL, metadata = NULL, xSet = NU
         20), project = NULL, ppm = 10, family = c("gaussian", 
         "symmetric"), span = 0.2, fwhm = 30) 
 {
+    if (!requireNamespace("MAIT", quietly = TRUE)) {
+      if(!requireNamespace("xcms", quietly = TRUE)){
+        stop("Packages MAIT and xcms are needed for this function to work. Please install them: BiocManager::install(c('MAIT','xcms')).",
+             call. = FALSE)
+      }
+      else stop("Package MAIT needed for this function to work. Please install it: BiocManager::install('MAIT').", call. = FALSE)
+    }
+    else if(!requireNamespace("xcms", quietly = TRUE)){
+      stop("Package xcms needed for this function to work. Please install it: BiocManager::install('xcms').",
+           call. = FALSE)
+    }
+  
     if (is.null(dataDir)) {
         stop("No input directory was given")
     }
@@ -99,21 +122,21 @@ sampleProcessing_modified = function (dataDir = NULL, metadata = NULL, xSet = NU
 				sclass = classes, nSlaves = nSlaves, peakwidth = peakwidth)
 		}
 		
-		cat("Peak detection done", fill = TRUE)
+      message("Peak detection done", fill = TRUE)
 		groups <- xcms::group(peaks, method = groupMethod, bw = bwGroup, 
 			mzwid = mzWidGroup, max = 50, minfrac = minfrac, minsamp = minsamp)
 		if (retcorrMethod != "none") {
 			retcorr_groups <- xcms::retcor(groups, method = retcorrMethod, family = family, span = span)
-			cat("Retention time correction done", fill = TRUE)
+			message("Retention time correction done", fill = TRUE)
 			groups <- xcms::group(retcorr_groups, method = groupMethod, 
 				bw = bwGroup, mzwid = mzWidGroup, max = 50)
-			cat("Peak grouping after samples done", fill = TRUE)
+			message("Peak grouping after samples done", fill = TRUE)
 		}
 		else {
-			cat("Skipping retention time correction...", fill = TRUE)
+		  message("Skipping retention time correction...", fill = TRUE)
 		}
 		fPeaks <- xcms::fillPeaks(groups)
-		cat("Missing Peak integration done", fill = TRUE)
+		message("Missing Peak integration done", fill = TRUE)
 		fPeaks <- list(fPeaks)
 	}
 

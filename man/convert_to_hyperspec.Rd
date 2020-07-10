@@ -21,12 +21,6 @@ convert_to_hyperspec(dataset)
    Returns an hyperspec object representing the dataset converted.
 }
 
-
-\examples{
-  ## Example of converting a dataset to an hyperspec object
-  data(cassavaPPD)
-  hyperspec.cassava = convert_to_hyperspec(cassavaPPD) 
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ hyperspec }

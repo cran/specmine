@@ -10,10 +10,10 @@
   
   data.dx = read_data_dx(folder.data)
   
-  freqs = data.dx[[1]][[2]][,1] # get frequencies from first spectrum
+  freqs = data.dx[[1]][[4]][,1] # get frequencies from first spectrum
   datamat = matrix(data = NA, nrow = length(freqs), ncol = length(data.dx))
 
-  for (i in 1:length(data.dx)) datamat[,i] = data.dx[[i]][[2]][,2]
+  for (i in 1:length(data.dx)) datamat[,i] = data.dx[[i]][[4]][,2]
   
   rownames(datamat) = as.character(freqs)
   colnames(datamat) = names(data.dx)
@@ -31,7 +31,7 @@
   snames <- gsub("\\.[^.]*$", "", basename(filenames));
   for (i in 1:length(filenames)) {
     print(paste("Reading sample ", filenames[i]))
-    sampleList[[i]] = readJDX::readJDX(filenames[i], debug = debug, SOFC = F) #If TRUE it fails for files that don't have 'firstY' metadata
+    sampleList[[i]] = readJDX::readJDX(filenames[i], debug = debug, SOFC = FALSE) #If TRUE it fails for files that don't have 'firstY' metadata
   }
   sampleNames = snames
   names(sampleList) = sampleNames

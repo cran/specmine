@@ -38,11 +38,6 @@ baseline_correction(dataset, method = "modpolyfit", ...)
   Returns the dataset with the data's baseline corrected.
 }
 
-\examples{
-  ## Example of baseline correction
-  data(cassavaPPD)
-  dataset.corrected = baseline_correction(cassavaPPD, method = "modpolyfit")
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ baseline }

@@ -30,11 +30,6 @@ scaling(dataset, method = "auto")
  Returns the dataset scaled.
 }
 
-\examples{
-  ## Example of auto scaling
-  data(cassavaPPD)
-  cassava.scal = scaling(cassavaPPD, "auto")
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ scaling }

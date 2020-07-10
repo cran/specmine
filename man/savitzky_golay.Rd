@@ -30,12 +30,6 @@ savitzky_golay(dataset, p.order, window, deriv = 0)
 Returns the dataset with the spectra smoothed using Savitzky-Golay.
 }
 
-\examples{
-  ## Example of smoothing the spectra from dataset with Savitzky-Golay
-  data(cassavaPPD)
-  dataset.smoothed = savitzky_golay(cassavaPPD, p.order = 3, window = 11, 
-		     deriv = 0)
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ smoothing }

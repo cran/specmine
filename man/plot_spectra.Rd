@@ -10,7 +10,7 @@ Plot spectra from dataset.
 \usage{
 plot_spectra(dataset, column.class, func = NULL, samples = NULL, 
 variable.bounds = NULL, xlab = NULL, ylab = NULL, lty = 1, 
-legend.place = "topright", cex = 0.8, reverse.x = F, ...)
+legend.place = "topright", cex = 0.8, reverse.x = FALSE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -50,14 +50,6 @@ legend.place = "topright", cex = 0.8, reverse.x = F, ...)
   \item{\dots}{
     additional parameters to matplot.
 }
-}
-
-\examples{
-  ## Example of plotting spectra (simple)
-  data(cassavaPPD)
-  plot_spectra(cassavaPPD, "varieties", func = NULL, 
-   samples = c("BRA_1", "IAC5_4"), variable.bounds = c(1000,2000), 
-   legend.place = "topright")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
