@@ -1,8 +1,8 @@
 Package: specmine
 Type: Package
 Title: Metabolomics and Spectral Data Analysis and Mining
-Version: 3.0.1
-Date: 2020-07-10
+Version: 3.0.2
+Date: 2020-09-18
 Author: Christopher Costa <chrisbcl@hotmail.com> [aut],
 	Marcelo Maraschin <mtocsy@gmail.com> [aut],
 	Miguel Rocha <mrocha@di.uminho.pt> [aut, cre],
@@ -15,7 +15,7 @@ Depends: R (>= 4.0.0)
 SystemRequirements: Python (>=3.5.2) and the following python module:
         nmrglue.
 Imports: hyperSpec, caret, e1071, ggplot2, impute, ellipse, GGally,
-        pcaPP, compare, baseline, MASS, pls, readJDX, speaq, gdata,
+        pcaPP, compare, baseline, MASS, pls, readJDX, speaq,
         genefilter, RColorBrewer, grDevices, graphics, methods, stats,
         utils, Metrics
 Suggests: ggdendro, reticulate, qdap, scatterplot3d, MAIT, xcms,
@@ -30,6 +30,6 @@ Description: Provides a set of methods for metabolomics
 	use: devtools::install_github('cytoscape/r-cytoscape.js@v0.0.7').
 License: GPL (>= 2)
 NeedsCompilation: no
-Packaged: 2020-07-10 13:47:18 UTC; saracardoso
+Packaged: 2020-09-18 13:15:53 UTC; Asus
 Repository: CRAN
-Date/Publication: 2020-07-10 15:20:03 UTC
+Date/Publication: 2020-09-18 14:40:03 UTC
