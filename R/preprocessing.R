@@ -20,42 +20,176 @@ absorbance_to_transmittance = function(dataset){
   dataset
 }
 
-# Smoothing - hyperSpec (spc.bin and spc.loess)
-smoothing_interpolation = function(dataset, method = "bin", reducing.factor = 2, x.axis = NULL, p.order = 3, window = 11, deriv = 0){
+# Smoothing - specmine (specmine.bin) and hyperspec (spc.loess)
+smoothing_interpolation = function(dataset, method = "bin", reducing.factor = 2, x.axis = NULL, p.order = 3, window = 11, deriv = 0, na.rm = TRUE){
   if (method == "bin") {
-		dataset = smoothing_spcbin_hyperspec(dataset, reducing.factor)
+		dataset = smoothing_spcbin(dataset, reducing.factor, na.rm = na.rm)
 	} 
   else if (method == "loess") {
-		dataset = smoothing_spcloess_hyperspec(dataset, x.axis)
+		dataset = smoothing_spcloess(dataset, x.axis)
 	} else if (method == "savitzky.golay"){
 		dataset = savitzky_golay(dataset, p.order, window, deriv)
 	}
 	dataset
 }
 
-# spc.bin hyperSpec smoothing interpolation
-smoothing_spcbin_hyperspec = function(dataset, reducing.factor = 2) {
-	hyper.object = convert_to_hyperspec(dataset)
-	smooth.result = hyperSpec::spc.bin(hyper.object, reducing.factor, na.rm = TRUE)
-	res.dataset = convert_from_hyperspec(smooth.result)
-  res.dataset$description = paste(dataset$description, "smoothed with hyperSpec spc.bin", sep="-")
-  res.dataset$type = res.dataset$type
+# Specmine binning smoothing interpolation
+smoothing_spcbin <- function(dataset, reducing.factor = 2, na.rm = TRUE) {
+  res.dataset <- specmine.bin(dataset, reducing.factor, na.rm = na.rm)
+  res.dataset$description <- paste(dataset$description, "smoothed with specmine bin", sep="-")
+  res.dataset$type <- dataset$type
   res.dataset
 }
 
-# spc.loess hyperSpec smoothing interpolation 
-smoothing_spcloess_hyperspec = function(dataset, x.axis = NULL){
-  hyper.object = convert_to_hyperspec(dataset)
+# Implementation taken from hyperspec spc.bin function
+specmine.bin <- function(dataset, reducing.factor = 2, na.rm = TRUE) {
+  
+  new_dataset <- dataset
+  
+  n <- ceiling( nrow(new_dataset$data) / reducing.factor)
+  
+  small <- nrow(new_dataset$data) %% reducing.factor
+  
+  if (small != 0){
+    warning(paste(c("Last data point averages only ", small, " points.")))
+  }
+  
+  bin <- rep(seq_len(n), each = reducing.factor, length.out = nrow(new_dataset$data))
+  
+  na <- is.na(new_dataset$data)
+  
+  
+  if ((na.rm > 0) && any(na)) {
+    if (na.rm == 1) {
+      na <- apply(!na, 2, tapply, bin, sum, na.rm = FALSE)
+      new_dataset$data <- t (apply(new_dataset$data, 2, tapply, bin, sum, na.rm = TRUE) / na)
+      
+    } else {
+      tmp <- t (apply (new_dataset$data, 2, tapply, bin, sum, na.rm = FALSE))
+      tmp <- sweep (tmp, 2, rle(bin)$lengths, "/")
+      
+      na <- which(is.na(tmp), arr.ind = TRUE)
+      bin <- split(wavelength.seq(new_dataset, bin))
+      
+      for (i in seq_len(ncol(na))) {
+        tmp [na [i, 2], na [i, 1]] <- mean(new_dataset$data[bin[[na[i,2]]], na[i, 1]], na.rm = TRUE)
+      }
+      
+      new_dataset$data <- tmp
+    }
+  } else {
+    new_dataset$data <- t (apply(new_dataset$data, 2, tapply, bin, sum, na.rm = FALSE))
+    new_dataset$data <- sweep (new_dataset$data, 2, rle(bin)$lengths, "/")
+  }
+  
+  new_dataset$data <- t(new_dataset$data)
+  
+  new_wl <- wavelengths(dataset, bin, na.rm = na.rm)
+  
+  rownames(new_dataset$data) <- new_wl
+  
+  new_dataset$xSet <- NULL
+  
+  warning("xSet is NULL because bthis process reseted wavelength values.")
+  
+  new_dataset
+}
+
+#Function to provide sequence of wavelength values, taken from hyperspec wl.seq implementation
+wavelength.seq <- function(dataset, from = 1, to = nrow(dataset$data), ...){
+  if (nrow(dataset$data) == 0) {
+    integer(0)
+  } else {
+    seq (from = from, to = to, ...)
+  }
+}
+
+#Function to adjust wavelenght values due to binning
+wavelengths <- function(dataset, bin, na.rm = TRUE){
+  wl <- suppressWarnings(as.numeric(rownames(dataset$data)))
+  
+  if (all(is.na(wl))) {
+    splits <- strsplit(rownames(dataset$data), "/")
+    first <- c()
+    second <- c()
+    for (i in 1:length(splits)){
+      first <- c(first, splits[[i]][1])
+      second <- c(second, splits[[i]][2])
+    }
+    new_first <- as.character(as.numeric (tapply(as.numeric(first), bin, mean, na.rm = na.rm > 0)))
+    new_second <- as.character(as.numeric (tapply(as.numeric(second), bin, mean, na.rm = na.rm > 0)))
+    
+    new_wl <- paste(new_first, new_second, sep = "/")
+    
+  } else {
+    new_wl <- as.character(as.numeric (tapply(wl, bin, mean, na.rm = na.rm > 0)))
+  }
+  
+  new_wl
+}
+
+
+# Specmine loess smoothing interpolation 
+smoothing_spcloess <- function(dataset, x.axis = NULL){
+  # In cases where rownames are strings not convertible to numeric
+  wl <- suppressWarnings(as.numeric(rownames(dataset$data)))
+  if (all(is.na(wl))) {
+    new_wl <- seq(from = 1, to = nrow(dataset$data))
+  } else {
+    new_wl <- wl
+  }
 	if (is.null(x.axis)){
-		smooth.result = hyperSpec::spc.loess(hyper.object, hyperSpec::wl(hyper.object), na.rm = TRUE)
+		res.dataset <- specmine.loess(dataset, newx = new_wl, na.rm = TRUE)
 	} else {
-		smooth.result = hyperSpec::spc.loess(hyper.object, x.axis, na.rm = TRUE)
+		res.dataset = specmine.loess(dataset, newx = x.axis, na.rm = TRUE)
 	}
-  res.dataset = convert_from_hyperspec(smooth.result)
-  res.dataset$description = paste(dataset$description, "smoothed with hyperSpec spc.loess", sep="-")
-  res.dataset$type = res.dataset$type
+  res.dataset$description = paste(dataset$description, "smoothed with specmine loess", sep="-")
+  res.dataset$type = dataset$type
   res.dataset
 }
+
+# Implementation taken from hyperspec spc.loess function
+specmine.loess <- function(dataset, newx, enp.target = nrow(dataset$data) / 4, surface = "direct", ...) {
+  
+  .loess <- function (y, x) {
+    if (all (is.na (y))) {
+      NA
+    } else {
+      loess (y ~ x, enp.target = enp.target, surface = surface, ...)
+    }
+  }
+  
+  .predict <- function (loess, x) {
+    if (! methods::is(loess, "loess") && is.na(loess)) {
+      rep (NA_real_, length(x))
+    } else {
+      predict (loess, x)
+    }
+  }
+  
+  wl <- suppressWarnings(as.numeric(rownames(dataset$data)))
+  if (all(is.na(wl))) {
+    new_wl <- seq(from = 1, to = nrow(dataset$data))
+  } else {
+    new_wl <- wl
+  }
+  
+  loess <- apply (dataset$data, 2, .loess, new_wl)
+  
+  dataset$data <- t (sapply(loess, .predict, newx))
+  
+  dataset$data <- t(dataset$data)
+  
+  rownames(dataset$data) <- newx
+  
+  if (any (is.na (dataset$data))) {
+    warning ("NAs were generated. Probably newx was outside the spectral range covered by spc.")
+  }
+  
+  dataset
+}
+
+
 
 savitzky_golay = function(dataset, p.order, window, deriv = 0){
     if (window %%2 != 1 || window < 0) 
@@ -99,24 +233,19 @@ savitzky_golay = function(dataset, p.order, window, deriv = 0){
 	dataset
 }
 
-background_correction = function(dataset) {
-  hyper.object = convert_to_hyperspec(dataset)
-	background = hyperSpec::apply(hyper.object, 2, quantile, probs = 0.05)
-	correction.result = hyperSpec::sweep(hyper.object, 2, background, "-")
-  res.dataset = convert_from_hyperspec(correction.result)
-  res.dataset$description = paste(dataset$description, "background correction", sep="; ")
-  res.dataset$type = dataset$type
-  res.dataset
+background_correction <- function(dataset) {
+  background <- apply(dataset$data, 1, quantile, probs = 0.05)
+  dataset$data <- sweep(dataset$data, 1, background, "-")
+  dataset$description <- paste(dataset$description, "background correction", sep="; ")
+  dataset
 }
 
-offset_correction = function(dataset){
-  hyper.object = convert_to_hyperspec(dataset)
-	offsets = hyperSpec::apply(hyper.object, 1, min)
-	correction.result = hyperSpec::sweep(hyper.object, 1, offsets, "-")
-  res.dataset = convert_from_hyperspec(correction.result)
-  res.dataset$description = paste(dataset$description, "offset correction", sep="; ")
-  res.dataset$type = dataset$type
-  res.dataset
+
+offset_correction <- function(dataset) {
+  offsets <- apply(dataset$data, 2, min)
+  dataset$data <- sweep(dataset$data, 2, offsets, "-")
+  dataset$description <- paste(dataset$description, "offset correction", sep="; ")
+  dataset
 }
 
 # ... - extra parameters to baseline function
