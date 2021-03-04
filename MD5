@@ -1,4 +1,4 @@
-97cee96d55bbc3b308c660b589e32457 *DESCRIPTION
+f3a2c0344a0e915dd3d398e001359e51 *DESCRIPTION
 355b6591ef9d39bb3e0f7bac2912f042 *NAMESPACE
 e3ecd8e7e53071997eb2c0f07b08239f *R/MAIT_metabolite_identification.R
 33042b84b4fa0c7b43402c4d9fdffb0a *R/NMR_metabolite_identification.R
@@ -10,7 +10,7 @@ f8e3e94e10494c6cc70f99f520e0e977 *R/feature_selection.R
 6d5e1bcb03abcd74b846e5bce717bfc6 *R/filter_dataset.R
 e0b403d95017e703cdee40a0a0c55000 *R/filters_flat.R
 94038a52c8c7c2238817fe03625fbc33 *R/get_metabolights_study.R
-2a5cd920cdc2e716cc7730125511b831 *R/graphics.R
+6e3daf51e58a616113302c7d491a0388 *R/graphics.R
 5844e2175930f38b762e8807e52b4b49 *R/init.R
 80faf4dfd1ed484582e1f55b4b5e53c2 *R/machinelearning.R
 ebab48ce0367f2b89e68a081c72f5f60 *R/missing_values.R
@@ -22,7 +22,7 @@ ebab48ce0367f2b89e68a081c72f5f60 *R/missing_values.R
 a574d9c27deaa413fe34f6d9114b3046 *R/peaklists.R
 efca6fedb082e25f143fec023518e88b *R/preprocessing.R
 6662ad98450b7c802226283e7c55ed13 *R/read.spc.modifed.R
-bb96a890f6bcb8fc6ae4489e48624133 *R/read_NMR_spectra.R
+8d2bbee80e859200b7d0e78b5004a78f *R/read_NMR_spectra.R
 08f7bbd32d4265617636698fa602d343 *R/read_dx.R
 01fc56dcd9ddaa4303fe65e1c0be4fbb *R/read_spc.R
 aaaff082678d60cbf5a103c6f79e6c9e *R/reading_data.R
@@ -33,7 +33,7 @@ aaaff082678d60cbf5a103c6f79e6c9e *R/reading_data.R
 b21d4c04e4e5b61a8edd5ddce352b4f4 *R/univariate.R
 7a67895c740b317caa7f58b9637580d4 *R/utils.R
 f728b83fff929423a0e4dea02bb0809f *README.md
-958ad3d2693d22bb3ecbe230eba020b3 *build/vignette.rds
+27029d220302668d42212fb1abce3012 *build/vignette.rds
 ec838e32e5bcd0bdfa9d629cc2365f92 *data/spectra_options.rda
 e39426d0df68779ef69cd5375839a76d *inst/doc/dataset_2d_analysis.R
 25eca821faf7df3689b222a63c9a4c6e *inst/doc/dataset_2d_analysis.Rmd
