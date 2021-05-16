@@ -8,7 +8,7 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
-```{r}
+```{r, echo=F}
 knitr::opts_chunk$set(
   eval = FALSE, echo = TRUE
 )
@@ -120,13 +120,12 @@ Data from 2D metabolomic experiments have a lot of information as said before, i
 
 The user can establish four parameters to this function:
 * baseline_thresh -- it establishes the baseline limit to consider a value as a peak;
-* purpose -- a string to be consider if threshold parameter is not given. It will calculate an SNR for each spectra that will be multiplied by 3 if the purpose is detection or by 10 if the purpose is quantification. Defaults to *detection*;
 * noise -- a numeric value that will apply a filter to the local maximum search. Defaults to 0;
 * negatives -- Boolean value to account or not for ppm values when building the reduced 1D dataset. Defaults to FALSE;
 
 ```{r}
   # Example without giving a threshold
-  reduced_tomato <- peak_detection2d(tomato_dataset, purp = "quantification")
+  reduced_tomato <- peak_detection2d(tomato_dataset)
 ```
 
 ```{r}

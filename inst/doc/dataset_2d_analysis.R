@@ -1,4 +1,4 @@
-## -----------------------------------------------------------------------------
+## ---- echo=F------------------------------------------------------------------
 knitr::opts_chunk$set(
   eval = FALSE, echo = TRUE
 )
@@ -53,7 +53,7 @@ knitr::opts_chunk$set(
 
 ## -----------------------------------------------------------------------------
 #    # Example without giving a threshold
-#    reduced_tomato <- peak_detection2d(tomato_dataset, purp = "quantification")
+#    reduced_tomato <- peak_detection2d(tomato_dataset)
 
 ## -----------------------------------------------------------------------------
 #    # Example giving a threshold

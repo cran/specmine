@@ -33,7 +33,7 @@ pathway_analysis(compounds, pathway,
 Shows the pathway created.
 }
 \examples{
-\donttest{
+\dontrun{
 cpds=c("HMDB0000042", "HMDB0000050", "HMDB0000452", "HMDB0001851", "HMDB0001964", "HMDB0000055",
        "HMDB0000094", "HMDB0000092", "HMDB0000174", "HMDB0000639", "HMDB0000500", "HMDB0002092",
        "HMDB0000176", "HMDB0000744", "HMDB0000223", "HMDB0000239", "HMDB0001545", "HMDB0001431",

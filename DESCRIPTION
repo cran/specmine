@@ -1,8 +1,8 @@
 Package: specmine
 Type: Package
 Title: Metabolomics and Spectral Data Analysis and Mining
-Version: 3.1.4
-Date: 2021-03-04
+Version: 3.1.5
+Date: 2021-05-10
 Author: Christopher Costa <chrisbcl@hotmail.com> [aut],
 	Marcelo Maraschin <mtocsy@gmail.com> [aut],
 	Miguel Rocha <mrocha@di.uminho.pt> [aut, cre],
@@ -19,7 +19,7 @@ Imports: caret, e1071, ggplot2, impute, ellipse, GGally, pcaPP,
         compare, baseline, MASS, pls, readJDX, speaq, genefilter,
         RColorBrewer, grDevices, graphics, methods, stats, utils,
         Metrics, imputeTS, specmine.datasets, mrbin, plotly, narray
-Suggests: ggdendro, reticulate, qdap, scatterplot3d, MAIT, xcms,
+Suggests: ggdendro, reticulate, qdap, qpdf, scatterplot3d, MAIT, xcms,
         KEGGgraph, KEGGREST, rcytoscapejs, rgl, grid, curl, RCurl,
         pins, knitr, rmarkdown
 LazyData: true
@@ -35,6 +35,6 @@ Description: Provides a set of methods for metabolomics
 	use: devtools::install_github('cytoscape/r-cytoscape.js@v0.0.7').
 License: GPL (>= 2)
 NeedsCompilation: no
-Packaged: 2021-03-04 14:29:10 UTC; Asus
+Packaged: 2021-05-15 14:28:44 UTC; Bruno Pereira
 Repository: CRAN
-Date/Publication: 2021-03-04 23:10:02 UTC
+Date/Publication: 2021-05-16 14:10:02 UTC

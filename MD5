@@ -1,4 +1,4 @@
-f3a2c0344a0e915dd3d398e001359e51 *DESCRIPTION
+4029b6f5af34d8abb712287a8a8c6dbd *DESCRIPTION
 355b6591ef9d39bb3e0f7bac2912f042 *NAMESPACE
 e3ecd8e7e53071997eb2c0f07b08239f *R/MAIT_metabolite_identification.R
 33042b84b4fa0c7b43402c4d9fdffb0a *R/NMR_metabolite_identification.R
@@ -22,7 +22,7 @@ ebab48ce0367f2b89e68a081c72f5f60 *R/missing_values.R
 a574d9c27deaa413fe34f6d9114b3046 *R/peaklists.R
 efca6fedb082e25f143fec023518e88b *R/preprocessing.R
 6662ad98450b7c802226283e7c55ed13 *R/read.spc.modifed.R
-8d2bbee80e859200b7d0e78b5004a78f *R/read_NMR_spectra.R
+2b601fd8fe3c4995d4342ffc42e11e86 *R/read_NMR_spectra.R
 08f7bbd32d4265617636698fa602d343 *R/read_dx.R
 01fc56dcd9ddaa4303fe65e1c0be4fbb *R/read_spc.R
 aaaff082678d60cbf5a103c6f79e6c9e *R/reading_data.R
@@ -33,11 +33,11 @@ aaaff082678d60cbf5a103c6f79e6c9e *R/reading_data.R
 b21d4c04e4e5b61a8edd5ddce352b4f4 *R/univariate.R
 7a67895c740b317caa7f58b9637580d4 *R/utils.R
 f728b83fff929423a0e4dea02bb0809f *README.md
-27029d220302668d42212fb1abce3012 *build/vignette.rds
+edbad159bfc422ac2795b3f2e2a6bfd9 *build/vignette.rds
 ec838e32e5bcd0bdfa9d629cc2365f92 *data/spectra_options.rda
-e39426d0df68779ef69cd5375839a76d *inst/doc/dataset_2d_analysis.R
-25eca821faf7df3689b222a63c9a4c6e *inst/doc/dataset_2d_analysis.Rmd
-ce679f95212f2fce5fd2c9b5b67c4e6b *inst/doc/dataset_2d_analysis.html
+3d1b69b65e90c7a025875807c5ca8232 *inst/doc/dataset_2d_analysis.R
+fb049ec2759d02f7ff98390b15fdcb5f *inst/doc/dataset_2d_analysis.Rmd
+30394320ec0564dfbc885b533f3e3f95 *inst/doc/dataset_2d_analysis.html
 368ff29897fcebf7dea1329d984d435d *inst/read_varian_2dspec_raw.py
 b9f3f2d24e8abaae32784154b84124eb *inst/read_varian_spec_raw.py
 5f3d58be9c1d463e525a3d62beaf82bf *man/MAIT_identify_metabolites.Rd
@@ -151,7 +151,7 @@ f7bf07a663d33e554fffced19b87b65d *man/multiplot.Rd
 854692bdacc20e12d842478c0f6191ef *man/num_samples.Rd
 8d32d0daceee1bf0ac951bbeef05179a *man/num_x_values.Rd
 ac307aff67f38a55d96b148085b1196d *man/offset_correction.Rd
-cb2917490036a718178fd7b512fc0174 *man/pathway_analysis.Rd
+f0ae86bf84d96758e1f3a5e908113535 *man/pathway_analysis.Rd
 e37367097730e01f92900cbbe7b6daf6 *man/pca_analysis_dataset.Rd
 1e8e8615d32c2b62b3416ef2bd3a9382 *man/pca_biplot.Rd
 ee9f72d67dc769d10d24875ceda8b8a6 *man/pca_biplot3D.Rd
@@ -160,7 +160,7 @@ be14efe709623f87a6cc7d6b84ff3656 *man/pca_kmeans_plot2D.Rd
 ec29edf3754440046d26f4aaf7879c1f *man/pca_kmeans_plot3D.Rd
 8f921fb16629ad292065a3ae594efd89 *man/pca_pairs_kmeans_plot.Rd
 0357b11e6177f72c1e61a288766356cc *man/pca_pairs_plot.Rd
-d5bdae8b10ddebcdb1709cac8b3f704c *man/pca_plot_3d.Rd
+789d784a487f8f7f09561acb7a62c946 *man/pca_plot_3d.Rd
 29ad712372b12fb79079ee3958637800 *man/pca_robust.Rd
 cecb80e103e54639f2252adb297cd23a *man/pca_scoresplot2D.Rd
 5e0f5bea1ffa2e94b0bbe6f3a1e817d3 *man/pca_scoresplot3D.Rd
@@ -245,4 +245,4 @@ fa14eeaf1037259e1ce9d81d44ae0a39 *man/variables_as_metadata.Rd
 3004ed51ac45700f1f76453fb92f289b *man/volcano_plot_fc_tt.Rd
 427f344599123e0cd75d877324142e1c *man/x_values_to_indexes.Rd
 51012ed085841b8fa45e02a4f9278c3e *man/xvalue_interval_to_indexes.Rd
-25eca821faf7df3689b222a63c9a4c6e *vignettes/dataset_2d_analysis.Rmd
+fb049ec2759d02f7ff98390b15fdcb5f *vignettes/dataset_2d_analysis.Rmd
